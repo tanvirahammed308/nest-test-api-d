@@ -1,0 +1,99 @@
+ecommerce-backend/
+│
+├── prisma/
+│   ├── migrations/
+│   │   └── ...
+│   │
+│   └── schema.prisma
+│
+├── src/
+│   │
+│   ├── auth/
+│   │   ├── dto/
+│   │   │   ├── login.dto.ts
+│   │   │   └── register.dto.ts
+│   │   │
+│   │   ├── guards/
+│   │   │   └── jwt-auth.guard.ts
+│   │   │
+│   │   ├── strategies/
+│   │   │   └── jwt.strategy.ts
+│   │   │
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   └── auth.module.ts
+│   │
+│   ├── users/
+│   │   ├── dto/
+│   │   │   └── update-user.dto.ts
+│   │   │
+│   │   ├── users.controller.ts
+│   │   ├── users.service.ts
+│   │   └── users.module.ts
+│   │
+│   ├── products/
+│   │   ├── dto/
+│   │   │   ├── create-product.dto.ts
+│   │   │   └── update-product.dto.ts
+│   │   │
+│   │   ├── products.controller.ts
+│   │   ├── products.service.ts
+│   │   └── products.module.ts
+│   │
+│   ├── categories/
+│   │   ├── dto/
+│   │   │   ├── create-category.dto.ts
+│   │   │   └── update-category.dto.ts
+│   │   │
+│   │   ├── categories.controller.ts
+│   │   ├── categories.service.ts
+│   │   └── categories.module.ts
+│   │
+│   ├── cart/
+│   │   ├── dto/
+│   │   │   └── add-to-cart.dto.ts
+│   │   │
+│   │   ├── cart.controller.ts
+│   │   ├── cart.service.ts
+│   │   └── cart.module.ts
+│   │
+│   ├── orders/
+│   │   ├── dto/
+│   │   │   └── create-order.dto.ts
+│   │   │
+│   │   ├── orders.controller.ts
+│   │   ├── orders.service.ts
+│   │   └── orders.module.ts
+│   │
+│   ├── payments/
+│   │   ├── payments.controller.ts
+│   │   ├── payments.service.ts
+│   │   └── payments.module.ts
+│   │
+│   ├── prisma/
+│   │   ├── prisma.module.ts
+│   │   └── prisma.service.ts
+│   │
+│   ├── redis/
+│   │   ├── redis.module.ts
+│   │   └── redis.service.ts
+│   │
+│   ├── common/
+│   │   ├── decorators/
+│   │   ├── filters/
+│   │   ├── guards/
+│   │   ├── interceptors/
+│   │   └── pipes/
+│   │
+│   ├── app.module.ts
+│   └── main.ts
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── nest-cli.json
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── tsconfig.build.json
+└── vercel.json
