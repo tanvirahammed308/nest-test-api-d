@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
         expiresIn: '7d',
       },
     }),
+    
   ],
 
   controllers: [AuthController],
