@@ -1,4 +1,6 @@
+
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,8 +16,15 @@ import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
 
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+
 @Module({
   imports: [
+    // Load environment variables from .env
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
     PrismaModule,
     RedisModule,
 
@@ -26,14 +35,12 @@ import { PaymentsModule } from './payments/payments.module';
     CartModule,
     OrdersModule,
     PaymentsModule,
+
+    CloudinaryModule,
   ],
 
-  controllers: [
-    AppController,
-  ],
+  controllers: [AppController],
 
-  providers: [
-    AppService,
-  ],
+  providers: [AppService],
 })
 export class AppModule {}
