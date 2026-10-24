@@ -17,8 +17,5 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
 }
 
-console.log('Node version:', process.version);
-console.log('Node execArgv:', process.execArgv);
-console.log('NODE_OPTIONS:', process.env.NODE_OPTIONS);
 
 bootstrap();

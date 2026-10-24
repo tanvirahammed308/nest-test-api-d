@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolvePackageJsonExports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -16,6 +16,8 @@
     "outDir": "./dist",
     "incremental": true,
     "skipLibCheck": true,
+    "noEmit": false,
+"emitDeclarationOnly": false,
     "strict": true,
     "strictPropertyInitialization": false
   }
