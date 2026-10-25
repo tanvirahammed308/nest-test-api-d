@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary } from 'cloudinary';
 
-import type { UploadedImageFile } from './uploaded-image.type';
+import type { UploadedImageFile } from './uploaded-image.type.js';
 
 @Injectable()
 export class CloudinaryService {

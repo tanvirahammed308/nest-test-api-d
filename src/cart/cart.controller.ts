@@ -9,7 +9,7 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
-import { CartService } from './cart.service';
+import { CartService } from './cart.service.js';
 
 @Controller('cart')
 export class CartController {

@@ -14,15 +14,15 @@ import {
   UploadedFile,
   BadRequestException,
 } from '@nestjs/common';
-import type { UploadedImageFile } from '../cloudinary/uploaded-image.type';
+import type { UploadedImageFile } from '../cloudinary/uploaded-image.type.js';
 
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { ProductsService } from './products.service';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { ProductsService } from './products.service.js';
+import { CloudinaryService } from '../cloudinary/cloudinary.service.js';
 
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { CreateProductDto } from './dto/create-product.dto.js';
+import { UpdateProductDto } from './dto/update-product.dto.js';
 
 @Controller('products')
 export class ProductsController {

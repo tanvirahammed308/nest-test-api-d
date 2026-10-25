@@ -4,9 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto/create-user.dto';
-import { UpdateUserDto } from '../auth/dto/update-user.dto';
+import { PrismaService } from '../prisma/prisma.service.js';
+import { CreateUserDto } from './dto/create-user.dto/create-user.dto.js';
+import { UpdateUserDto } from '../auth/dto/update-user.dto.js';
 
 @Injectable()
 export class UsersService {
