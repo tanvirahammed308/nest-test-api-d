@@ -46,13 +46,14 @@ export class AuthService {
     });
 
     return {
-      message: 'User registered successfully',
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
-    };
+  message: 'User registered successfully',
+  user: {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  },
+};
   }
 
   // LOGIN
@@ -86,14 +87,15 @@ export class AuthService {
     const accessToken = await this.jwtService.signAsync(payload);
 
     return {
-      message: 'Login successful',
-      accessToken,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
-    };
+  message: 'Login successful',
+  accessToken,
+  user: {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  },
+};
   }
 
   // GET USER
@@ -106,6 +108,7 @@ export class AuthService {
         id: true,
         name: true,
         email: true,
+           role: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -173,6 +176,7 @@ export class AuthService {
         id: true,
         name: true,
         email: true,
+           role: true,
         createdAt: true,
         updatedAt: true,
       },
