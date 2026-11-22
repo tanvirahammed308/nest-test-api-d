@@ -44,21 +44,58 @@ export class ProductsController {
   }
 
   // POST /api/products
-  @Post()
-  @UseInterceptors(FileInterceptor('image'))
-  async create(
-    @Body() createProductDto: CreateProductDto,
-    @UploadedFile() file?: UploadedImageFile,
-  ) {
-    const imageUrl = file
-      ? await this.cloudinaryService.uploadImage(file)
-      : undefined;
 
-    return this.productsService.create({
-      ...createProductDto,
-      ...(imageUrl && { image: imageUrl }),
-    });
+  @Post()
+@UseInterceptors(FileInterceptor('image'))
+async create(
+  @Body() createProductDto: CreateProductDto,
+  @UploadedFile() file?: UploadedImageFile,
+) {
+  console.log('========== PRODUCT IMAGE DEBUG ==========');
+
+  console.log('Received file:', file ? 'YES' : 'NO');
+
+  if (file) {
+    console.log('File name:', file.originalname);
+    console.log('File mimetype:', file.mimetype);
+    console.log('File size:', file.size);
+    console.log('Buffer exists:', Boolean(file.buffer));
   }
+
+  let imageUrl: string | undefined;
+
+  if (file) {
+    imageUrl = await this.cloudinaryService.uploadImage(file);
+    console.log('Cloudinary image URL:', imageUrl);
+  }
+
+  const result = await this.productsService.create({
+    ...createProductDto,
+    ...(imageUrl && { image: imageUrl }),
+  });
+
+  console.log('Created product image:', result);
+
+  console.log('=========================================');
+
+  return result;
+}
+
+  // @Post()
+  // @UseInterceptors(FileInterceptor('image'))
+  // async create(
+  //   @Body() createProductDto: CreateProductDto,
+  //   @UploadedFile() file?: UploadedImageFile,
+  // ) {
+  //   const imageUrl = file
+  //     ? await this.cloudinaryService.uploadImage(file)
+  //     : undefined;
+
+  //   return this.productsService.create({
+  //     ...createProductDto,
+  //     ...(imageUrl && { image: imageUrl }),
+  //   });
+  // }
 
   // PATCH /api/products/:id
   @Patch(':id')

@@ -45,6 +45,18 @@ export class CloudinaryService {
             return;
           }
 
+          if (!result) {
+  reject(new Error('Cloudinary returned no upload result'));
+  return;
+}
+
+console.log('Cloudinary upload successful:', {
+  public_id: result.public_id,
+  secure_url: result.secure_url,
+});
+
+resolve(result.secure_url);
+
           resolve(result.secure_url);
         },
       );
