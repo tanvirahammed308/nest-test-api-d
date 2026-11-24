@@ -26,11 +26,23 @@ export class OrdersService {
     };
   }
 
-  // Get all orders
+  // Get all orders (Admin)
   async findAll() {
     return this.prisma.order.findMany({
       orderBy: {
         id: 'desc',
+      },
+    });
+  }
+
+  // Get orders of logged-in customer
+  async findMyOrders(userId: number) {
+    return this.prisma.order.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   }
