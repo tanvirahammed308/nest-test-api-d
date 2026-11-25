@@ -20,21 +20,25 @@ model User {
   role      UserRole @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   cart      Cart?
   orders    Order[]
+  addresses Address[]
+  wishlist  Wishlist[]
 }
 
 model Product {
-  id Int @id @default(autoincrement())
-
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   price       Float
-  stock       Int        @default(0)
+  stock       Int      @default(0)
   image       String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  cartItems   CartItem[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  cartItems     CartItem[]
+  wishlistItems Wishlist[]
 }
 
 model Order {
@@ -45,27 +49,64 @@ model Order {
   shippingAddress String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model Cart {
-  id        Int        @id @default(autoincrement())
-  userId    Int        @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items     CartItem[]
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
 }
 
 model CartItem {
-  id        Int     @id @default(autoincrement())
+  id        Int @id @default(autoincrement())
   cartId    Int
   productId Int
-  quantity  Int     @default(1)
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int @default(1)
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
   @@unique([cartId, productId])
+}
+
+model Address {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  fullName     String
+  phone        String
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  state        String?
+  postalCode   String?
+  country      String   @default("Bangladesh")
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Wishlist {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  productId Int
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
 }
