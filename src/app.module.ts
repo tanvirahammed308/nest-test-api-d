@@ -18,6 +18,7 @@ import { PaymentsModule } from './payments/payments.module.js';
 
 import { CloudinaryModule } from './cloudinary/cloudinary.module.js';
 import { AddressesModule } from './addresses/addresses.module.js';
+import { WishlistModule } from './wishlist/wishlist.module.js';
 
 @Module({
   imports: [
@@ -41,6 +42,8 @@ import { AddressesModule } from './addresses/addresses.module.js';
     CloudinaryModule,
 
     AddressesModule,
+
+    WishlistModule,
   ],
 
   controllers: [AppController],
