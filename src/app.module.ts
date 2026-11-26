@@ -17,6 +17,7 @@ import { OrdersModule } from './orders/orders.module.js';
 import { PaymentsModule } from './payments/payments.module.js';
 
 import { CloudinaryModule } from './cloudinary/cloudinary.module.js';
+import { AddressesModule } from './addresses/addresses.module.js';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module.js';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    
 
     PrismaModule,
     RedisModule,
@@ -37,6 +39,8 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module.js';
     PaymentsModule,
 
     CloudinaryModule,
+
+    AddressesModule,
   ],
 
   controllers: [AppController],
