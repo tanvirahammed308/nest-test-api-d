@@ -2,10 +2,14 @@
 import {
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 
+import * as bcrypt from 'bcrypt';
+
 import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateUserDto } from './dto/create-user.dto/create-user.dto.js';
+import { CreateUserDto } from './dto/create-user.dto.js';
+import { ChangePasswordDto } from './dto/change-password.dto.js';
 import { UpdateUserDto } from '../auth/dto/update-user.dto.js';
 
 @Injectable()
@@ -65,43 +69,94 @@ export class UsersService {
     });
   }
 
-  
-  
-// PATCH /api/users/:id
-async updateUser(id: number, data: UpdateUserDto) {
-  const user = await this.prisma.user.findUnique({
-    where: { id },
-  });
+  // PATCH /api/users/change-password
+  async changePassword(
+    userId: number,
+    data: ChangePasswordDto,
+  ) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
 
-  if (!user) {
-    throw new NotFoundException('User not found');
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const passwordMatch = await bcrypt.compare(
+      data.currentPassword,
+      user.password,
+    );
+
+    if (!passwordMatch) {
+      throw new UnauthorizedException(
+        'Current password is incorrect',
+      );
+    }
+
+    if (data.currentPassword === data.newPassword) {
+      throw new UnauthorizedException(
+        'New password must be different from current password',
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(
+      data.newPassword,
+      10,
+    );
+
+    await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    return {
+      message: 'Password changed successfully',
+    };
   }
 
-  const updatedUser = await this.prisma.user.update({
-    where: { id },
-    data: {
-      ...(data.name !== undefined && {
-        name: data.name,
-      }),
-      ...(data.email !== undefined && {
-        email: data.email,
-      }),
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
+  // PATCH /api/users/:id
+  async updateUser(
+    id: number,
+    data: UpdateUserDto,
+  ) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
 
-  return {
-    message: 'User updated successfully',
-    updatedUser,
-  };
-}
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: {
+        ...(data.name !== undefined && {
+          name: data.name,
+        }),
+        ...(data.email !== undefined && {
+          email: data.email,
+        }),
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return {
+      message: 'User updated successfully',
+      updatedUser,
+    };
+  }
 
   // DELETE /api/users/:id
   async deleteUser(id: number) {
